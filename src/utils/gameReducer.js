@@ -88,7 +88,7 @@ export const ACTIONS = {
       case ACTIONS.RESTART_GAME:
         return {
           ...state,
-          isGameStart: true,
+          isGameStart: false,
           isGameOver: false,
           characters: state.characters.map((char) => ({
             ...char,

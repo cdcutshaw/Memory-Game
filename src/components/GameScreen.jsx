@@ -13,10 +13,10 @@ export default function GameScreen ({gameState, dispatch}) {
                 dispatch={dispatch}
             />
             <button
-                onClick={() => dispatch({type: 'END_GAME'})}
+                onClick={() => dispatch({type: 'RESTART_GAME'})}
                 className='endBtn'
             >
-                End Game
+                Restart Game
             </button>
         </div>
     );

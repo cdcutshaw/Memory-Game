@@ -1,3 +1,5 @@
+
+
 export default function StartScreen ({dispatch}) {
 return (
     <div className="startScreen">

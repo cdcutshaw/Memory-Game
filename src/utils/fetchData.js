@@ -1,4 +1,5 @@
 const API_KEY = 'CYz6vjAnJF12HerHurgbirG3MybbJp3h';
+const gifCache = JSON.parse(localStorage.getItem('gifCache')) || {};
 
 const displayedCharacters = [
     {displayName: 'Jinx',  gifId: 'PM7EBVwNHRuXYKIsJf'},
@@ -20,9 +21,13 @@ export default async function fetchData() {
   try {
     const characters = await Promise.all(
       displayedCharacters.map(async ({displayName, gifId}) => {
+
+        if(gifCache[gifId]) {
+            console.log(`Using cached GIF for ${displayName}`);
+            return gifCache[gifId];
+        }
+
         const url = `https://api.giphy.com/v1/gifs/${gifId}?api_key=${API_KEY}`;
-
-
         const response = await fetch(url);
 
         if (!response.ok) {
@@ -32,12 +37,16 @@ export default async function fetchData() {
         const data = await response.json();
         const gifImage = data.data.images.fixed_width.url;
 
-        return {
+        const character = {
             id: gifId, // You can keep track of the GIF id
             name: displayName,
             image: gifImage,
             isClicked: false,
           };
+
+          gifCache[gifId] = character;
+          localStorage.setItem('gifCache', JSON.stringify(gifCache));
+          return character;
         })
       );
   
