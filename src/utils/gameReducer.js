@@ -4,17 +4,15 @@ export const ACTIONS = {
     START_GAME: 'START_GAME',
     CARD_CLICK: 'CARD_CLICK',
     END_GAME: 'END_GAME',
-    /* TOGGLE_SOUND: 'TOGGLE_SOUND', */
     WIN_GAME: 'WIN_GAME',
     SET_CARDS: 'SET_CARDS',
-    RESTART_GAME: 'RESTART_GAME', // Added for clarity
+    RESTART_GAME: 'RESTART_GAME', 
   };
 
   export const createInitialGameState = () => ({
-    characters: [], // Loaded by SET_CARDS
+    characters: [], 
     score: 0,
     highScore: 0,
-    allowSounds: true, // Uncomment to enable
     isGameStart: false,
     isGameOver: false,
   });
@@ -32,30 +30,26 @@ export const ACTIONS = {
           ...state,
           isGameStart: true,
           isGameOver: false,
-          score: 0, // Reset the score
+          score: 0,
           characters: shuffle(state.characters).map((char) => ({
             ...char,
-            isClicked: false, // Reset all characters' isClicked status
+            isClicked: false, 
           })),
         };
   
       case ACTIONS.CARD_CLICK: {
         const cardId = action.payload;
-  
-        // Find the clicked card
         const cardIndex = state.characters.findIndex((card) => card.id === cardId);
         const clickedCard = state.characters[cardIndex];
   
-        // If already clicked, end the game
         if (clickedCard.isClicked) {
           return {
             ...state,
             isGameOver: true,
-            highScore: Math.max(state.highScore, state.score), // Update high score
+            highScore: Math.max(state.highScore, state.score), 
           };
         }
   
-        // Update card as clicked and increment score
         const updatedCharacters = [...state.characters];
         updatedCharacters[cardIndex] = {
           ...clickedCard,
@@ -64,7 +58,7 @@ export const ACTIONS = {
   
         return {
           ...state,
-          characters: shuffle(updatedCharacters), // Shuffle after every click
+          characters: shuffle(updatedCharacters),
           score: state.score + 1,
         };
       }
@@ -74,15 +68,14 @@ export const ACTIONS = {
           ...state,
           isGameStart: false,
           isGameOver: true,
-          highScore: Math.max(state.highScore, state.score), // Update high score
+          highScore: Math.max(state.highScore, state.score), 
         };
   
       case ACTIONS.WIN_GAME:
-        console.log('WIN_GAME action dispatched')
         return {
           ...state,
           isGameOver: true,
-          highScore: Math.max(state.highScore, state.score), // Update high score
+          highScore: Math.max(state.highScore, state.score), 
         };
   
       case ACTIONS.RESTART_GAME:
@@ -92,18 +85,10 @@ export const ACTIONS = {
           isGameOver: false,
           characters: state.characters.map((char) => ({
             ...char,
-            isClicked: false, // Reset clicked status
+            isClicked: false, 
           })),
           score: 0,
         };
-  
-      /* Uncomment if enabling sound
-      case ACTIONS.TOGGLE_SOUND:
-        return {
-          ...state,
-          allowSounds: !state.allowSounds,
-        };
-      */
   
       default:
         return state;

@@ -17,21 +17,17 @@ function App() {
     createInitialGameState
   );
 
-  useEffect(() => {
-    console.log(gameState); // This will show the gameState in the console whenever it updates
-  }, [gameState]);
-
+  
   useEffect(() => {
     const loadCardData = async () => {
-      const cardData = await fetchData(); // Fetch card data
-      console.log(cardData);
-      dispatch({ type: ACTIONS.SET_CARDS, payload: cardData }); // Add a new action to handle this
+      const cardData = await fetchData(); 
+      dispatch({ type: ACTIONS.SET_CARDS, payload: cardData }); 
     };
 
     loadCardData();
-  }, []); // Runs only on component mount
+  }, []); 
 
-  // Save high score to local storage
+  
   useEffect(() => {
     localStorage.setItem(
       'highScoreMemory',
@@ -39,15 +35,7 @@ function App() {
     );
   }, [gameState.highScore]);
 
-  /* // Save allow sound preference
-  useEffect(() => {
-    localStorage.setItem(
-      'allowSoundsMemory',
-      JSON.stringify(gameState.allowSounds)
-    );
-  }, [gameState.allowSounds]); */
-
-  // Checks win condition
+  
   useEffect(() => {
     if (gameState.characters.length > 0 && gameState.characters.every((char) => char.isClicked)) {
 
@@ -55,16 +43,11 @@ function App() {
     }
   }, [gameState.characters]);
 
-  /* const toggleSound = () => {
-    dispatch({ type: ACTIONS.TOGGLE_SOUND });
-  }; */
 
   return (
     <>
-      
-
       {!gameState.isGameStart && (
-        <StartScreen /* soundOn={gameState.allowSounds} */ dispatch={dispatch} />
+        <StartScreen  dispatch={dispatch} />
       )}
 
       {gameState.isGameStart && !gameState.isGameOver && (
@@ -75,13 +58,6 @@ function App() {
         <EndScreen gameState={gameState} dispatch={dispatch} />
       )}
 
-      {/* <button type="button" className="btn__toggle-sound" onClick={toggleSound}>
-        <div className="material-symbols-outlined">
-          {gameState.allowSounds ? 'volume_up' : 'volume_off'}
-        </div>
-      </button> */}
-
-      
     </>
   );
   

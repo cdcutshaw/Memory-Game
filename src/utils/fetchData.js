@@ -23,7 +23,6 @@ export default async function fetchData() {
       displayedCharacters.map(async ({displayName, gifId}) => {
 
         if(gifCache[gifId]) {
-            console.log(`Using cached GIF for ${displayName}`);
             return gifCache[gifId];
         }
 
@@ -38,7 +37,7 @@ export default async function fetchData() {
         const gifImage = data.data.images.fixed_width.url;
 
         const character = {
-            id: gifId, // You can keep track of the GIF id
+            id: gifId, 
             name: displayName,
             image: gifImage,
             isClicked: false,
@@ -51,6 +50,7 @@ export default async function fetchData() {
       );
   
       return characters;
+
     } catch (error) {
       console.error('Error fetching data from Giphy:', error);
       return [];

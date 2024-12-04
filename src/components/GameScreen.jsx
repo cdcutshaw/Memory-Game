@@ -14,7 +14,7 @@ export default function GameScreen ({gameState, dispatch}) {
             />
             <button
                 onClick={() => dispatch({type: 'RESTART_GAME'})}
-                className='endBtn'
+                className='restartBtn'
             >
                 Restart Game
             </button>
