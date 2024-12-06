@@ -17,17 +17,14 @@ function App() {
     createInitialGameState
   );
 
-  
   useEffect(() => {
     const loadCardData = async () => {
       const cardData = await fetchData(); 
       dispatch({ type: ACTIONS.SET_CARDS, payload: cardData }); 
     };
-
     loadCardData();
   }, []); 
 
-  
   useEffect(() => {
     localStorage.setItem(
       'highScoreMemory',
@@ -35,32 +32,31 @@ function App() {
     );
   }, [gameState.highScore]);
 
-  
   useEffect(() => {
-    if (gameState.characters.length > 0 && gameState.characters.every((char) => char.isClicked)) {
-
+    if (
+      gameState.characters.length > 0 &&
+      gameState.characters.every((char) => char.isClicked)
+    ) {
       dispatch({ type: ACTIONS.WIN_GAME });
     }
   }, [gameState.characters]);
 
-
   return (
-    <>
+    <div className="appContainer">
       {!gameState.isGameStart && (
-        <StartScreen  dispatch={dispatch} />
+        <StartScreen dispatch={dispatch} />
       )}
 
-      {gameState.isGameStart && !gameState.isGameOver && (
-        <GameScreen gameState={gameState} dispatch={dispatch} />
+      {gameState.isGameStart && (
+        <>
+          <GameScreen gameState={gameState} dispatch={dispatch} />
+          {gameState.isGameOver && (
+            <EndScreen gameState={gameState} dispatch={dispatch} />
+          )}
+        </>
       )}
-
-      {gameState.isGameOver && (
-        <EndScreen gameState={gameState} dispatch={dispatch} />
-      )}
-
-    </>
+    </div>
   );
-  
 }
 
 export default App;

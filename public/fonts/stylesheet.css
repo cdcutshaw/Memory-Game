@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Arcane Nine';
+    src: url('ArcaneNine.woff2') format('woff2'),
+        url('ArcaneNine.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
